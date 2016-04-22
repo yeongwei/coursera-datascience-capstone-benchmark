@@ -205,8 +205,21 @@ benchmark <- compiler::cmpfun(function(FUN, ..., sent.list, ext.output=T) {
 
 # As an example, we create a very simple baseline algorithm which always returns
 # the three most frequent English words.
-predict.baseline <- function(x){c('the', 'on', 'a')}
-
+capstoneHome <- "D:/development/datasciencecoursera/10-data-science-capstone"
+setwd(capstoneHome)
+load(paste(capstoneHome, "/markovChainModelReference.RData", sep = ""))
+markovModel <- markovChainModelReference
+source(paste(capstoneHome, "/week4-MarkovChain.R", sep = ""))
+predict.baseline <- function(x){
+  # Refer to server.R
+  predictedWords <- predictFollowingWord(markovModel, x, 3)
+  predictedWordsMatrix <- t(as.matrix(predictedWords$conditionalProbabilities))
+  outcome <- paste(colnames(predictedWordsMatrix), collapse = ", ")
+  print(outcome)
+  return(outcome)
+  # c('the', 'on', 'a')
+}
+setwd("D:/development/datasciencecoursera/10-data-science-capstone-benchmark")
 
 
 ################################################################################################
